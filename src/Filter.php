@@ -37,8 +37,11 @@ class Filter extends Object
      * @param $itemIdentifier
      * @param $itemLabel
      */
-    public function __construct($name, $label, $itemIdentifier = 'id', $itemLabel = 'name')
+    public function __construct($name, $label = null, $itemIdentifier = 'id', $itemLabel = 'name')
     {
+        if (is_null($label)) {
+            $label = $name;
+        }
         $this->name = $name;
         $this->label = $label;
         $this->itemIdentifier = $itemIdentifier;

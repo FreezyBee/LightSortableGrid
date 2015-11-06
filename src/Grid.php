@@ -120,7 +120,7 @@ class Grid extends Control
      * @param $itemLabel
      * @return Filter
      */
-    public function addFilter($name, $label, $itemIdentifier, $itemLabel)
+    public function addFilter($name, $label = null, $itemIdentifier = 'id', $itemLabel = 'name')
     {
         $this->filters[] = $filter = new Filter($name, $label, $itemIdentifier, $itemLabel);
         return $filter;
