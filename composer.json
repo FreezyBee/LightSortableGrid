@@ -1,0 +1,37 @@
+{
+  "name": "freezy-bee/light-sortable-grid",
+  "type": "library",
+  "description": "Light drag & drop sortable grid for Doctrine + Nette Framework.",
+  "keywords": [
+    "nette",
+    "freezy-bee",
+    "datagrid"
+  ],
+  "homepage": "http://freezybee.ifire.cz",
+  "license": [
+    "BSD-3-Clause",
+    "GPL-2.0",
+    "GPL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "Jakub Janata",
+      "homepage": "https://ifire.cz"
+    }
+  ],
+  "require": {
+    "nette/nette": "~2.3",
+    "kdyby/doctrine": "~3.0"
+  },
+  "require-dev:": {
+    "tracy/tracy": "~2.3"
+  },
+  "suggest": {
+    "nette/di": "The extension can be registered using nette/di into your application"
+  },
+  "autoload": {
+    "psr-4": {
+      "FreezyBee\\LightSortableGrid\\": "src/"
+    }
+  }
+}

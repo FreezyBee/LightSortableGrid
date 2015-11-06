@@ -1,0 +1,79 @@
+<div class="light-sortable-grid">
+
+    <form n:name="form" n:if="$filters" class="filters-form">
+        {foreach $form['filters']->getComponents() as $component}
+            {input $component}
+        {/foreach}
+        <button n:name="applyFilter" class="btn btn-sm btn-primary-outline light-sortable-grid-btn-filter">
+            <i class="fa fa-filter"></i> Filtrovat
+        </button>
+        <button n:name="applyReset" n:if="count($activeFilters)" class="btn btn-sm btn-warning-outline">
+            <i class="fa fa-ban"></i> Zrušit filtr
+        </button>
+    </form>
+
+    <table class="table sortable" data-link="{link sort!}">
+        <thead>
+        <tr>
+            <th n:foreach="$columns as $column">{$column->label}</th>
+            <th class="text-right">
+                <a href="#" class="btn btn-sm btn-success-outline btn-sort-save sortable-displayed">
+                    <i class="fa fa-save"></i> uložit
+                </a>
+                <a n:href="this" class="btn btn-sm btn-warning-outline sortable-displayed">
+                    <i class="fa fa-undo"></i> zrušit
+                </a>
+                <a n:if="count($activeFilters) === 0" href="#"
+                   class="btn btn-sm btn-warning-outline btn-sort-show sortable-hidden">
+                    <i class="fa fa-sort"></i> seřadit
+                </a>
+                <a href="{plink add}" class="btn btn-sm btn-success-outline sortable-hidden">
+                    <i class="fa fa-plus"></i> přidat
+                </a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr n:foreach="$data as $item" data-id="{$item->id}">
+            <td n:foreach="$columns as $column">
+                {var $nameArr = $column->name}
+                {var $value = clone $item}
+                {for $i = 0; $i < count($nameArr); $i++}
+                    {var $value = $value->{$nameArr[$i]};}
+                {/for}
+                {$value}
+            </td>
+            <td class="text-right">
+                {foreach $actions as $action}
+                    {if $action->modal}
+                        <a
+                                data-confirm="modal"
+                                data-confirm-title="{$action->modal->title}"
+                                data-confirm-text="{$action->modal->text}"
+                                data-confirm-ok-class="btn-danger"
+                                data-confirm-ok-text="{$action->modal->btnOk}"
+                                data-confirm-cancel-class="btn-success"
+                                data-confirm-cancel-text="{$action->modal->btnCancel}"
+                                {if $action->modal->ajax}data-ajax="on"{/if}
+                                class="btn btn-danger-outline btn-sm sortable-hidden"
+                                title="{$action->label}"
+                                href="{plink $action->name , id => $item->id}">
+                            <i class="fa fa-{$action->icon}"></i>
+                        </a>
+                    {else}
+                        <a href="{plink $action->name , id => $item->id}"
+                           class="btn btn-sm btn-primary-outline sortable-hidden" title="{$action->label}">
+                            <i class="fa fa-{$action->icon}"></i>
+                        </a>
+                    {/if}
+                {/foreach}
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="{count($columns) + 1}"></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
