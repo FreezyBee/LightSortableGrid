@@ -55,14 +55,14 @@
                                 data-confirm-cancel-class="btn-success"
                                 data-confirm-cancel-text="{$action->modal->btnCancel}"
                                 {if $action->modal->ajax}data-ajax="on"{/if}
-                                class="btn btn-danger-outline btn-sm sortable-hidden"
+                                class="btn btn-sm sortable-hidden {$action->class}"
                                 title="{$action->label}"
                                 href="{plink $action->name , id => $item->id}">
                             <i class="fa fa-{$action->icon}"></i>
                         </a>
                     {else}
                         <a href="{plink $action->name , id => $item->id}"
-                           class="btn btn-sm btn-primary-outline sortable-hidden" title="{$action->label}">
+                           class="btn btn-sm sortable-hidden {$action->class}" title="{$action->label}">
                             <i class="fa fa-{$action->icon}"></i>
                         </a>
                     {/if}

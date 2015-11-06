@@ -103,13 +103,14 @@ class Grid extends Control
     /**
      * @param $name
      * @param $title
+     * @param string $class
      * @param null $icon
      * @param Modal $modal
      * @return Action
      */
-    public function addAction($name, $title = null, $icon = null, Modal $modal = null)
+    public function addAction($name, $title = null, $class = '', $icon = null, Modal $modal = null)
     {
-        $this->actions[] = $action = new Action($name, $title, $icon, $modal);
+        $this->actions[] = $action = new Action($name, $title, $class, $icon, $modal);
         return $action;
     }
 
@@ -220,6 +221,7 @@ class Grid extends Control
      */
     private function loadFilterData(Filter $filter)
     {
+        // TODO neco inteligentnejsiho
         $entityPath = $this->entityRepository->getClassName();
         $pos = strrpos($entityPath, "\\");
         if ($pos === false) {

@@ -23,6 +23,11 @@ class Action extends Object
     /**
      * @var string
      */
+    private $class;
+
+    /**
+     * @var string
+     */
     private $icon;
 
     /**
@@ -34,13 +39,15 @@ class Action extends Object
      * Action constructor.
      * @param $name
      * @param $label
+     * @param string $class
      * @param $icon
-     * @param $modal
+     * @param Modal $modal
      */
-    public function __construct($name, $label = null, $icon = null, Modal $modal = null)
+    public function __construct($name, $label = null, $class = '', $icon = null, Modal $modal = null)
     {
         $this->name = $name;
         $this->label = $label;
+        $this->class = $class;
         $this->icon = $icon;
         $this->modal = $modal;
 
@@ -56,11 +63,21 @@ class Action extends Object
             switch ($this->name) {
                 case 'edit':
                     $this->icon = 'pencil-square-o';
+                    if (empty($this->class)) {
+                        $this->class = 'btn-primary-outline';
+                    }
                     break;
                 case 'delete':
                     $this->icon = 'trash-o';
+                    if (empty($this->class)) {
+                        $this->class = 'btn-danger-outline';
+                    }
                     break;
             }
+        }
+
+        if (empty($this->class)) {
+            $this->class = 'btn-primary-outline';
         }
     }
 
@@ -88,6 +105,14 @@ class Action extends Object
     public function getLabel()
     {
         return $this->label;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 
     /**
