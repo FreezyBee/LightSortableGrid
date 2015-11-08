@@ -20,8 +20,9 @@ $(function () {
         }
 
         var url = $('table.sortable').data('link');
+        var valueName = $('table.sortable').data('value-name');
         var data = {};
-        data[url.substr(5, url.length - 9) + 'order'] = JSON.stringify(sortableTable.sortable('toArray', {attribute: 'data-id'}))
+        data[valueName + '-order'] = JSON.stringify(sortableTable.sortable('toArray', {attribute: 'data-id'}))
 
         $.nette.ajax({
             type: 'GET',

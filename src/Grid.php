@@ -6,6 +6,7 @@ use Kdyby\Doctrine\EntityManager;
 use Kdyby\Doctrine\EntityRepository;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
+use Nette\Reflection\Annotation;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
@@ -56,11 +57,10 @@ class Grid extends Control
      */
     private $entityManager;
 
-
     /**
      * @param EntityRepository $entityRepository
      */
-    public function setDataSource(EntityRepository $entityRepository)
+    public function __construct(EntityRepository $entityRepository)
     {
         $this->entityRepository = $entityRepository;
         $this->entityManager = $entityRepository->getEntityManager();
@@ -77,7 +77,8 @@ class Grid extends Control
 
         $filters = $form->addContainer('filters');
         foreach ($this->filters as $filter) {
-            $filters->addSelect($filter->getName(), $filter->getLabel(), $this->loadFilterData($filter));
+            $values = array_merge(['_default' => $filter->getLabel() . ' (vše)'], $this->loadFilterData($filter));
+            $filters->addSelect($filter->getName(), $filter->getLabel(), $values);
         }
 
         $form->addSubmit('applyFilter')
@@ -134,7 +135,9 @@ class Grid extends Control
     {
         $where = [];
         foreach ($this->filters as $filter) {
-            if (array_key_exists($filter->getName(), (array)$this->activeFilters)) {
+            if (array_key_exists($filter->getName(), (array)$this->activeFilters) &&
+                $this->activeFilters[$filter->name] != '_default'
+            ) {
                 $where[$filter->getName() . '.' . $filter->getItemIdentifier()] = $this->activeFilters[$filter->name];
             }
         }
@@ -169,8 +172,7 @@ class Grid extends Control
      */
     public function handleSort($order)
     {
-        $data = self::prepareSortData($order);
-        if ($data) {
+        if ($order && $data = self::prepareSortData($order)) {
             $this->onValid($data);
         } else {
             $this->onError();
@@ -183,6 +185,10 @@ class Grid extends Control
     public function handleFilter(\Nette\Forms\Controls\SubmitButton $button)
     {
         $this->activeFilters = $button->form->values->filters;
+
+        if ($this->presenter->isAjax()) {
+            $this->redrawControl('lightSortableGrid');
+        }
     }
 
     /**
@@ -191,6 +197,7 @@ class Grid extends Control
     public function handleReset(\Nette\Forms\Controls\SubmitButton $button)
     {
         $this->activeFilters = [];
+        $this->redirect('this', ['filters' => null]);
     }
 
     /**
@@ -221,14 +228,12 @@ class Grid extends Control
      */
     private function loadFilterData(Filter $filter)
     {
-        // TODO neco inteligentnejsiho
-        $entityPath = $this->entityRepository->getClassName();
-        $pos = strrpos($entityPath, "\\");
-        if ($pos === false) {
-            throw new \Exception('error entity path');
-        }
-        $class = substr($entityPath, 0, $pos) . '\\' . ucfirst($filter->getName());
+        $meta = $this->entityRepository->getClassMetadata();
 
+        $entityClassReflection = new \Nette\Reflection\ClassType($meta->name);
+        /** @var Annotation $entityClass */
+        $entityClass = $entityClassReflection->getProperty($filter->getName())->getAnnotation('var');
+        $class = $entityClassReflection->getNamespaceName() . '\\' . $entityClass;
         $repository = $this->entityManager->getRepository($class);
 
         if ($repository instanceof \Kdyby\Doctrine\EntityDao) {

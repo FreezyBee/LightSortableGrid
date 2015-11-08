@@ -1,10 +1,10 @@
-<div class="light-sortable-grid">
+<div class="light-sortable-grid" n:snippet="lightSortableGrid">
 
     <form n:name="form" n:if="$filters" class="filters-form">
         {foreach $form['filters']->getComponents() as $component}
             {input $component}
         {/foreach}
-        <button n:name="applyFilter" class="btn btn-sm btn-primary-outline light-sortable-grid-btn-filter">
+        <button n:name="applyFilter" class="btn btn-sm btn-primary-outline light-sortable-grid-btn-filter ajax">
             <i class="fa fa-filter"></i> Filtrovat
         </button>
         <button n:name="applyReset" n:if="count($activeFilters)" class="btn btn-sm btn-warning-outline">
@@ -12,7 +12,7 @@
         </button>
     </form>
 
-    <table class="table sortable" data-link="{link sort!}">
+    <table class="table sortable" data-link="{link sort!}" data-value-name="{$control->name}">
         <thead>
         <tr>
             <th n:foreach="$columns as $column">{$column->label}</th>
@@ -36,12 +36,16 @@
         <tbody>
         <tr n:foreach="$data as $item" data-id="{$item->id}">
             <td n:foreach="$columns as $column">
-                {var $nameArr = $column->name}
-                {var $value = clone $item}
-                {for $i = 0; $i < count($nameArr); $i++}
-                    {var $value = $value->{$nameArr[$i]};}
-                {/for}
-                {$value}
+                {if $cb = $column->getCustomRenderer()}
+                    {php echo $cb($item)}
+                {else}
+                    {var $nameArr = $column->name}
+                    {var $value = clone $item}
+                    {for $i = 0; $i < count($nameArr); $i++}
+                        {var $value = $value->{$nameArr[$i]};}
+                    {/for}
+                    {$value}
+                {/if}
             </td>
             <td class="text-right">
                 {foreach $actions as $action}

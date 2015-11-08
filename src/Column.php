@@ -26,6 +26,11 @@ class Column extends Object
     private $type;
 
     /**
+     * @var
+     */
+    private $customRenderer;
+
+    /**
      * Column constructor.
      * @param $name
      * @param null $label
@@ -39,6 +44,16 @@ class Column extends Object
         $this->name = $name;
         $this->label = $label;
         $this->type = $type;
+    }
+
+    public function setCustomRenderer($callback)
+    {
+        $this->customRenderer = $callback;
+    }
+
+    public function getCustomRenderer()
+    {
+        return $this->customRenderer;
     }
 
     /**
