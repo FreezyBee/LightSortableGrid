@@ -44,7 +44,12 @@
                     {for $i = 0; $i < count($nameArr); $i++}
                         {var $value = $value->{$nameArr[$i]};}
                     {/for}
-                    {$value}
+
+                    {if $value instanceof DateTime}
+                        {$value|date:'j. n. Y'}
+                    {else}
+                        {$value}
+                    {/if}
                 {/if}
             </td>
             <td class="text-right">
