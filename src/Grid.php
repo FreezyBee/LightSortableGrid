@@ -155,7 +155,7 @@ class Grid extends Control
             }
         }
 
-        return $this->entityRepository->findBy($where, ['ord' => 'ASC']);
+        return $this->entityRepository->findBy($where, ($this->disableSort ? [] : ['ord' => 'ASC']));
     }
 
     /**
