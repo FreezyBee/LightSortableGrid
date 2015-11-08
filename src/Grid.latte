@@ -12,7 +12,7 @@
         </button>
     </form>
 
-    <table class="table sortable" data-link="{link sort!}" data-value-name="{$control->name}">
+    <table class="table sortable" {if $disableSort}data-link="{link sort!}" data-value-name="{$control->name}"{/if}>
         <thead>
         <tr>
             <th n:foreach="$columns as $column">{$column->label}</th>
@@ -23,7 +23,7 @@
                 <a n:href="this" class="btn btn-sm btn-warning-outline sortable-displayed">
                     <i class="fa fa-undo"></i> zrušit
                 </a>
-                <a n:if="count($activeFilters) === 0" href="#"
+                <a n:if="count($activeFilters) === 0 && !$disableSort" href="#"
                    class="btn btn-sm btn-warning-outline btn-sort-show sortable-hidden">
                     <i class="fa fa-sort"></i> seřadit
                 </a>
