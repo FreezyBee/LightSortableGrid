@@ -66,11 +66,31 @@ class Modal extends Object
     }
 
     /**
+     * @param string $title
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getText()
     {
         return $this->text;
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+        return $this;
     }
 
     /**
@@ -82,6 +102,16 @@ class Modal extends Object
     }
 
     /**
+     * @param string $btnOk
+     * @return $this
+     */
+    public function setBtnOk($btnOk)
+    {
+        $this->btnOk = $btnOk;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getBtnCancel()
@@ -90,10 +120,30 @@ class Modal extends Object
     }
 
     /**
+     * @param string $btnCancel
+     * @return $this
+     */
+    public function setBtnCancel($btnCancel)
+    {
+        $this->btnCancel = $btnCancel;
+        return $this;
+    }
+
+    /**
      * @return boolean
      */
     public function isAjax()
     {
         return $this->ajax;
+    }
+
+    /**
+     * @param boolean $ajax
+     * @return $this
+     */
+    public function setAjax($ajax)
+    {
+        $this->ajax = $ajax;
+        return $this;
     }
 }

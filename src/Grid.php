@@ -38,6 +38,11 @@ class Grid extends Control
     private $disableAdd;
 
     /**
+     * @var array
+     */
+    private $conditions = [];
+
+    /**
      * @var Column[]
      */
     private $columns = [];
@@ -140,18 +145,22 @@ class Grid extends Control
 
     /**
      * @param bool|true $value
+     * @return $this
      */
     public function disableSort($value = true)
     {
         $this->disableSort = $value;
+        return $this;
     }
 
     /**
      * @param bool|true $value
+     * @return $this
      */
     public function disableAdd($value = true)
     {
         $this->disableAdd = $value;
+        return $this;
     }
 
     /**
@@ -159,16 +168,27 @@ class Grid extends Control
      */
     public function getFilteredData()
     {
-        $where = [];
+        $where = $this->conditions;
         foreach ($this->filters as $filter) {
             if (array_key_exists($filter->getName(), (array)$this->activeFilters) &&
-                $this->activeFilters[$filter->name] != '_default'
+                $this->activeFilters[$filter->getName()] != '_default'
             ) {
-                $where[$filter->getName() . '.' . $filter->getItemIdentifier()] = $this->activeFilters[$filter->name];
+                $where[$filter->getName() . '.' . $filter->getItemIdentifier()] =
+                    $this->activeFilters[$filter->getName()];
             }
         }
 
         return $this->entityRepository->findBy($where, ($this->disableSort ? [] : ['ord' => 'ASC']));
+    }
+
+    /**
+     * @param array $conditions
+     * @return $this
+     */
+    public function setConditions(array $conditions)
+    {
+        $this->conditions = $conditions;
+        return $this;
     }
 
     /**

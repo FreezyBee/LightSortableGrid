@@ -54,6 +54,7 @@
             </td>
             <td class="text-right">
                 {foreach $actions as $action}
+                    {var $cb = $action->getCustomLink() ?: false}
                     {if $action->modal}
                         <a
                                 data-confirm="modal"
@@ -66,11 +67,11 @@
                                 {if $action->modal->ajax}data-ajax="on"{/if}
                                 class="btn btn-sm sortable-hidden {$action->class}"
                                 title="{$action->label}"
-                                href="{plink $action->name , id => $item->id}">
+                                href="{if $cb}{$cb($item)}{else}{plink $action->name , id => $item->id}{/if}">
                             <i class="fa fa-{$action->icon}"></i>
                         </a>
                     {else}
-                        <a href="{plink $action->name , id => $item->id}"
+                        <a href="{if $cb}{$cb($item)}{else}{plink $action->name , id => $item->id}{/if}"
                            class="btn btn-sm sortable-hidden {$action->class}" title="{$action->label}">
                             <i class="fa fa-{$action->icon}"></i>
                         </a>

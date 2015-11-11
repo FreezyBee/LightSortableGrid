@@ -36,6 +36,11 @@ class Action extends Object
     private $modal;
 
     /**
+     * @var
+     */
+    private $customLink;
+
+    /**
      * Action constructor.
      * @param $name
      * @param $label
@@ -82,6 +87,14 @@ class Action extends Object
     }
 
     /**
+     * @return Modal
+     */
+    public function getModal()
+    {
+        return $this->modal;
+    }
+
+    /**
      * @param Modal $modal
      * @return Modal
      */
@@ -100,11 +113,31 @@ class Action extends Object
     }
 
     /**
+     * @param string $name
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getLabel()
     {
         return $this->label;
+    }
+
+    /**
+     * @param string $label
+     * @return $this
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+        return $this;
     }
 
     /**
@@ -116,6 +149,16 @@ class Action extends Object
     }
 
     /**
+     * @param string $class
+     * @return $this
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getIcon()
@@ -124,10 +167,28 @@ class Action extends Object
     }
 
     /**
-     * @return Modal
+     * @param string $icon
+     * @return $this
      */
-    public function getModal()
+    public function setIcon($icon)
     {
-        return $this->modal;
+        $this->icon = $icon;
+        return $this;
+    }
+
+    /**
+     * @return callback
+     */
+    public function getCustomLink()
+    {
+        return $this->customLink;
+    }
+
+    /**
+     * @param callback $callback
+     */
+    public function setCustomLink($callback)
+    {
+        $this->customLink = $callback;
     }
 }
