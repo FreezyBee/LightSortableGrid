@@ -33,6 +33,11 @@ class Grid extends Control
     private $disableSort;
 
     /**
+     * @var boolean
+     */
+    private $disableAdd;
+
+    /**
      * @var Column[]
      */
     private $columns = [];
@@ -142,6 +147,14 @@ class Grid extends Control
     }
 
     /**
+     * @param bool|true $value
+     */
+    public function disableAdd($value = true)
+    {
+        $this->disableAdd = $value;
+    }
+
+    /**
      * @return array
      */
     public function getFilteredData()
@@ -176,6 +189,7 @@ class Grid extends Control
         $template->activeFilters = $this->activeFilters;
         $template->data = $data;
         $template->disableSort = $this->disableSort;
+        $template->disableAdd = $this->disableAdd;
 
         $template->setFile(__DIR__ . '/Grid.latte');
         $template->render();
