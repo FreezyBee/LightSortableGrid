@@ -33,9 +33,9 @@ class Grid extends Control
     private $disableSort;
 
     /**
-     * @var boolean
+     * @var string
      */
-    private $disableAdd;
+    private $addLink = 'add';
 
     /**
      * @var array
@@ -92,7 +92,7 @@ class Grid extends Control
 
         $filters = $form->addContainer('filters');
         foreach ($this->filters as $filter) {
-            $values = array_merge(['_default' => $filter->getLabel() . ' (vše)'], $this->loadFilterData($filter));
+            $values = ['_default' => $filter->getLabel() . ' (vše)'] + $this->loadFilterData($filter);
             $filters->addSelect($filter->getName(), $filter->getLabel(), $values);
         }
 
@@ -157,9 +157,9 @@ class Grid extends Control
      * @param bool|true $value
      * @return $this
      */
-    public function disableAdd($value = true)
+    public function setCustomAddLink($value = false)
     {
-        $this->disableAdd = $value;
+        $this->addLink = $value;
         return $this;
     }
 
@@ -209,7 +209,7 @@ class Grid extends Control
         $template->activeFilters = $this->activeFilters;
         $template->data = $data;
         $template->disableSort = $this->disableSort;
-        $template->disableAdd = $this->disableAdd;
+        $template->addLink = $this->addLink;
 
         $template->setFile(__DIR__ . '/Grid.latte');
         $template->render();
