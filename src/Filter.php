@@ -56,6 +56,13 @@ class Filter extends Object
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
     /**
      * @return string
@@ -63,6 +70,14 @@ class Filter extends Object
     public function getLabel()
     {
         return $this->label;
+    }
+
+    /**
+     * @param string $label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
     }
 
     /**
@@ -74,10 +89,26 @@ class Filter extends Object
     }
 
     /**
+     * @param string $itemIdentifier
+     */
+    public function setItemIdentifier($itemIdentifier)
+    {
+        $this->itemIdentifier = $itemIdentifier;
+    }
+
+    /**
      * @return string
      */
     public function getItemLabel()
     {
         return $this->itemLabel;
+    }
+
+    /**
+     * @param string $itemLabel
+     */
+    public function setItemLabel($itemLabel)
+    {
+        $this->itemLabel = $itemLabel;
     }
 }
