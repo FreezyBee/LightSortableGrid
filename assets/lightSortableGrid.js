@@ -37,7 +37,7 @@ $(function () {
         return false;
     });
 
-    $('.light-sortable-grid select').change(function () {
+    $(document).on('change', '.light-sortable-grid select', function () {
         $('.light-sortable-grid-btn-filter').click();
     });
 
