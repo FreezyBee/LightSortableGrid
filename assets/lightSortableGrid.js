@@ -20,8 +20,16 @@ $(function () {
         }
 
         var url = $('table.sortable').data('link');
-        var valueName = $('table.sortable').data('value-name');
+        var m = url.match(/do=([^&]+)/);
+        if (m && m.length) {
+            var valueName = m[1].substring(0, m[1].length - 5);
+        } else {
+            alert('error');
+            return;
+        }
+
         var data = {};
+
         data[valueName + '-order'] = JSON.stringify(sortableTable.sortable('toArray', {attribute: 'data-id'}))
 
         $.nette.ajax({

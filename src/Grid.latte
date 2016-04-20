@@ -12,7 +12,7 @@
         </button>
     </form>
 
-    <table class="table sortable" {if !$disableSort}data-link="{link sort!}" data-value-name="{$control->name}"{/if}>
+    <table class="table sortable" {if !$disableSort}data-link="{link sort!}"{/if}>
         <thead>
         <tr>
             <th n:foreach="$columns as $column">{$column->label}</th>
