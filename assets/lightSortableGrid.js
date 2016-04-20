@@ -21,7 +21,7 @@ $(function () {
 
         var url = $('table.sortable').data('link');
         var m = url.match(/[?&]do=([^&]+)/);
-        if (m && m.length) {
+        if (m && m.length == 2) {
             var valueName = m[1].substring(0, m[1].length - 5);
         } else {
             alert('error');
