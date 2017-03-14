@@ -277,15 +277,8 @@ class Grid extends Control
     private function loadFilterData(Filter $filter)
     {
         $meta = $this->entityRepository->getClassMetadata();
-
-        $entityClassReflection = new \Nette\Reflection\ClassType($meta->name);
-        /** @var Annotation $entityClass */
-        $entityClass = $entityClassReflection->getProperty($filter->getName())->getAnnotation('var');
-        $class = $entityClassReflection->getNamespaceName() . '\\' . $entityClass;
-        $repository = $this->entityManager->getRepository($class);
-
-        if ($repository instanceof \Kdyby\Doctrine\EntityDao) {
-            return $repository->findPairs([], $filter->getItemLabel(), [], $filter->getItemIdentifier());
-        }
+        $associationMapping = $meta->getAssociationMapping($filter->getName());
+        $repository = $this->entityManager->getRepository($associationMapping['targetEntity']);
+        return $repository->findPairs([], $filter->getItemLabel(), [], $filter->getItemIdentifier());
     }
 }
