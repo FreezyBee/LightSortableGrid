@@ -40,7 +40,7 @@
                     {php echo $cb($item)}
                 {else}
                     {var $nameArr = $column->name}
-                    {var $value = clone $item}
+                    {var $value = $item}
                     {for $i = 0; $i < count($nameArr); $i++}
                         {var $value = $value->{$nameArr[$i]};}
                     {/for}
