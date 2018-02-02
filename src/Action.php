@@ -2,14 +2,19 @@
 
 namespace FreezyBee\LightSortableGrid;
 
-use Nette\Object;
+use Nette\SmartObject;
 
 /**
- * Class Action
- * @package FreezyBee\LightSortableGrid
+ * @property-read string $name
+ * @property-read string $label
+ * @property-read string $class
+ * @property-read string $icon
+ * @property-read Modal|null $modal
  */
-class Action extends Object
+class Action
 {
+    use SmartObject;
+
     /**
      * @var string
      */

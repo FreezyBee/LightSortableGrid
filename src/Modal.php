@@ -2,14 +2,19 @@
 
 namespace FreezyBee\LightSortableGrid;
 
-use Nette\Object;
+use Nette\SmartObject;
 
 /**
- * Class Modal
- * @package FreezyBee\LightSortableGrid
+ * @property-read string $title
+ * @property-read string $text
+ * @property-read string $btnOk
+ * @property-read string $btnCancel
+ * @property-read bool $ajax
  */
-class Modal extends Object
+class Modal
 {
+    use SmartObject;
+
     /**
      * @var string
      */

@@ -2,14 +2,18 @@
 
 namespace FreezyBee\LightSortableGrid;
 
-use Nette\Object;
+use Nette\SmartObject;
 
 /**
- * Class Column
- * @package FreezyBee\LightSortableGrid
+ * @property-read string $name
+ * @property-read string $label
+ * @property-read int $type
+ * @property-read callable $customRenderer
  */
-class Column extends Object
+class Column
 {
+    use SmartObject;
+
     /**
      * @var string
      */

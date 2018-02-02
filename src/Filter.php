@@ -2,14 +2,16 @@
 
 namespace FreezyBee\LightSortableGrid;
 
-use Nette\Object;
+use Nette\SmartObject;
 
 /**
  * Class Filter
  * @package FreezyBee\LightSortableGrid
  */
-class Filter extends Object
+class Filter
 {
+    use SmartObject;
+
     /**
      * @var string
      */

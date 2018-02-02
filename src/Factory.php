@@ -3,21 +3,16 @@
 namespace FreezyBee\LightSortableGrid;
 
 use Kdyby\Doctrine\EntityManager;
-use Kdyby\Doctrine\EntityRepository;
-use Nette\Application\UI\Control;
-use Nette\Application\UI\Form;
-use Nette\Object;
-use Nette\Reflection\Annotation;
-use Nette\Utils\ArrayHash;
-use Nette\Utils\Json;
-use Nette\Utils\JsonException;
+use Nette\SmartObject;
 
 /**
  * Class Factory
  * @package FreezyBee\LightSortableGrid
  */
-class Factory extends Object
+class Factory
 {
+    use SmartObject;
+
     /**
      * @var EntityManager
      */
